@@ -144,6 +144,21 @@ describe('Mam', function() {
             })
             socket.emit('xmpp.mam.query', request, function() {})
         })
+        
+        it('Can handle an error response', function(done) {
+
+            xmpp.once('stanza', function() {
+                manager.makeCallback(helper.getStanza('iq-error'))
+            })
+            var callback = function(error, data) {
+                should.not.exist(data)
+                error.type.should.equal('cancel')
+                error.condition.should.equal('error-condition')
+                xmpp.removeAllListeners('stanza')
+                done()
+            }
+            socket.emit('xmpp.mam.query', {}, callback)
+        })
     })
 
 })
