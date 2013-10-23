@@ -1,7 +1,8 @@
 var should = require('should')
-  , Mam = require('../../lib/mam')
+  , Mam    = require('../../lib/mam')
   , ltx    = require('ltx')
   , helper = require('../helper')
+  , rsm    = require('xmpp-ftw/lib/utils/xep-0059')
 
 describe('Mam', function() {
 
@@ -123,6 +124,22 @@ describe('Mam', function() {
                 stanza.getChild('query', mam.NS)
                     .getChildText('end')
                     .should.equal(request.end)
+                done()
+            })
+            socket.emit('xmpp.mam.query', request, function() {})
+        })
+
+        it('Sends expected stanza with RSM', function(done) {
+            var request = { rsm: { max: '100' } } 
+            
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('iq').should.be.true
+                stanza.attrs.id.should.exist
+                stanza.attrs.type.should.equal('get')
+                stanza.getChild('query', mam.NS)
+                    .getChild('set', rsm.NS)
+                    .getChildText('max')
+                    .should.equal(request.rsm.max)
                 done()
             })
             socket.emit('xmpp.mam.query', request, function() {})
