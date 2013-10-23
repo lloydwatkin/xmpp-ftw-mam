@@ -1,4 +1,12 @@
-<iq from='notify.wonderland.lit'
-    id='1'
-    to='alice@wonderland.lit/rabbithole'
-    type='result' />
+<iq type="result" id="q29302">
+  <query xmlns="urn:xmpp:mam:tmp">
+    <start>start-date-time</start>
+    <end>end-date-time</end>
+    <with>juliet@shakespeare.lit</with>
+    <set xmlns="http://jabber.org/protocol/rsm">
+       <first index="0">first</first>
+       <last>last</last>
+       <count>10</count>
+    </set>
+  </query>
+</iq>

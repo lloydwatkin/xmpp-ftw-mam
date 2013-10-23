@@ -158,6 +158,38 @@ describe('Mam', function() {
                 done()
             }
             socket.emit('xmpp.mam.query', {}, callback)
+        })        
+        
+        it('Can handle an success response', function(done) {
+
+            xmpp.once('stanza', function() {
+                manager.makeCallback(helper.getStanza('iq-result'))
+            })
+            var callback = function(error, data) {
+                should.not.exist(error)
+                data.with.should.equal('juliet@shakespeare.lit')
+                data.start.should.equal('start-date-time')
+                data.end.should.equal('end-date-time')
+                done()
+            }
+            socket.emit('xmpp.mam.query', {}, callback)
+        })  
+        
+        it('Can handle an success response with RSM', function(done) {
+
+            xmpp.once('stanza', function() {
+                manager.makeCallback(helper.getStanza('iq-result'))
+            })
+            var callback = function(error, data, rsm) {
+                should.not.exist(error)
+                rsm.should.exist
+                rsm.count.should.equal(10)
+                rsm.first.should.equal('first')
+                rsm.last.should.equal('last')
+                rsm['first-index'].should.equal('0')
+                done()
+            }
+            socket.emit('xmpp.mam.query', {}, callback)
         })
     })
 
