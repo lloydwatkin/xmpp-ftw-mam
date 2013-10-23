@@ -68,6 +68,65 @@ describe('Mam', function() {
             })
             socket.emit('xmpp.mam.query', request, function() {})
         })
+
+        it('Sends expected stanza with query id', function(done) {
+            var request = { id: 'query-id-1' } 
+            
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('iq').should.be.true
+                stanza.attrs.id.should.exist
+                stanza.attrs.type.should.equal('get')
+                stanza.getChild('query', mam.NS).attrs.queryid
+                    .should.equal(request.id)
+                done()
+            })
+            socket.emit('xmpp.mam.query', request, function() {})
+        })
+
+        it('Sends expected stanza with query id', function(done) {
+            var request = { with: 'juliet@shakespeare.lit' } 
+            
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('iq').should.be.true
+                stanza.attrs.id.should.exist
+                stanza.attrs.type.should.equal('get')
+                stanza.getChild('query', mam.NS)
+                    .getChildText('with')
+                    .should.equal(request.with)
+                done()
+            })
+            socket.emit('xmpp.mam.query', request, function() {})
+        })
+
+        it('Sends expected stanza with start', function(done) {
+            var request = { start: 'start-date-time' } 
+            
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('iq').should.be.true
+                stanza.attrs.id.should.exist
+                stanza.attrs.type.should.equal('get')
+                stanza.getChild('query', mam.NS)
+                    .getChildText('start')
+                    .should.equal(request.start)
+                done()
+            })
+            socket.emit('xmpp.mam.query', request, function() {})
+        })
+
+        it('Sends expected stanza with end', function(done) {
+            var request = { end: 'end-date-time' } 
+            
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('iq').should.be.true
+                stanza.attrs.id.should.exist
+                stanza.attrs.type.should.equal('get')
+                stanza.getChild('query', mam.NS)
+                    .getChildText('end')
+                    .should.equal(request.end)
+                done()
+            })
+            socket.emit('xmpp.mam.query', request, function() {})
+        })
     })
 
 })
