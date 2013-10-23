@@ -24,11 +24,7 @@ describe('Mam', function() {
         mam.init(manager)
     })
 
-    describe('Handles', function() {
-        
-        it('Returns false for all stanzas', function() {
-            mam.handles(ltx.parse('<message/>')).should.be.false
-        })
+    describe('Preferences', function() {
         
     })
 

@@ -29,7 +29,7 @@
     "url": "https://github.com/lloydwatkin/xmpp-ftw-mam/issues"
   },
   "dependencies": {
-    "ltx": "*",
+    "ltx": "*"
   },
   "devDependencies": {
     "mocha": "~1.8.1",
