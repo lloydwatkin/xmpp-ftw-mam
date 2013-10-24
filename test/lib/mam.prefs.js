@@ -91,6 +91,88 @@ describe('Mam', function() {
             socket.emit('xmpp.mam.preferences', request, function() {})
         })
 
+        it('Errors if \'always\' provided and not an array', function(done) {
+            var request = { default: 'roster', always: true }
+            xmpp.once('stanza', function() {
+                done('Unexpected outgoing stanza')
+            })
+            var callback = function(error, success) {
+                should.not.exist(success)
+                error.type.should.equal('modify')
+                error.condition.should.equal('client-error')
+                error.description.should.equal('\'always\' should be an array')
+                error.request.should.eql(request)
+                xmpp.removeAllListeners('stanza')
+                done()
+            }
+            socket.emit(
+                'xmpp.mam.preferences',
+                request,
+                callback
+            )
+        })
+
+        it('Sends expected stanza with \'always\' entries', function(done) {
+            var request = {
+                default: 'roster',
+                always: [ 'romeo@shakespeare.lit', 'juliet@shakespeare.lit' ]
+            }
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('iq').should.be.true
+                stanza.attrs.type.should.equal('set')
+                stanza.attrs.id.should.exist
+                var always = stanza.getChild('prefs', mam.NS)
+                    .getChild('always')
+                    .getChildren('jid')
+                always.length.should.equal(request.always.length)
+                always[0].getText().should.equal(request.always[0])
+                always[1].getText().should.equal(request.always[1])
+                done()
+            })
+            socket.emit('xmpp.mam.preferences', request, function() {})
+        })
+
+        it('Errors if \'never\' provided and not an array', function(done) {
+            var request = { default: 'roster', never: false }
+            xmpp.once('stanza', function() {
+                done('Unexpected outgoing stanza')
+            })
+            var callback = function(error, success) {
+                should.not.exist(success)
+                error.type.should.equal('modify')
+                error.condition.should.equal('client-error')
+                error.description.should.equal('\'never\' should be an array')
+                error.request.should.eql(request)
+                xmpp.removeAllListeners('stanza')
+                done()
+            }
+            socket.emit(
+                'xmpp.mam.preferences',
+                request,
+                callback
+            )
+        })
+
+        it('Sends expected stanza with \'never\' entries', function(done) {
+            var request = {
+                default: 'roster',
+                never: [ 'oberon@shakespeare.lit', 'hamlet@shakespeare.lit' ]
+            }
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('iq').should.be.true
+                stanza.attrs.type.should.equal('set')
+                stanza.attrs.id.should.exist
+                var never = stanza.getChild('prefs', mam.NS)
+                    .getChild('never')
+                    .getChildren('jid')
+                never.length.should.equal(request.never.length)
+                never[0].getText().should.equal(request.never[0])
+                never[1].getText().should.equal(request.never[1])
+                done()
+            })
+            socket.emit('xmpp.mam.preferences', request, function() {})
+        })
+
     })
 
 }) 
