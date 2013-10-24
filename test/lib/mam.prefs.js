@@ -75,7 +75,22 @@ describe('Mam', function() {
                 request,
                 callback
             )
-        }) 
+        })
+
+        it('Sends expected stanza', function(done) {
+            var request = { default: 'roster' }
+            xmpp.once('stanza', function(stanza) {
+                stanza.is('iq').should.be.true
+                stanza.attrs.type.should.equal('set')
+                stanza.attrs.id.should.exist
+                stanza.getChild('prefs', mam.NS)
+                    .attrs.default
+                    .should.equal(request.default)
+                done()
+            })
+            socket.emit('xmpp.mam.preferences', request, function() {})
+        })
+
     })
 
 }) 
