@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/lloydwatkin/xmpp-ftw-mam.git"
+    "url": "git://github.com/xmpp-ftw/xmpp-ftw-mam.git"
   },
   "keywords": [
     "mam",
@@ -26,7 +26,7 @@
   "license": "Apache 2.0",
   "readmeFilename": "README.md",
   "bugs": {
-    "url": "https://github.com/lloydwatkin/xmpp-ftw-mam/issues"
+    "url": "https://github.com/xmpp-ftw/xmpp-ftw-mam/issues"
   },
   "dependencies": {
     "ltx": "*"
