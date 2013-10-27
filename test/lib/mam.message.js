@@ -42,4 +42,33 @@ describe('Mam', function() {
         
     })
 
+    describe('Handle', function() {
+
+        it('Handles archived message', function(done) {
+            socket.on('xmpp.mam.message', function(data) {
+                data.from.should.eql({
+                    domain: 'shakespeare.lit',
+                    user: 'romeo',
+                    resource: 'desktop'
+                })
+                data.content.should.equal('Message')
+                data.format.should.equal('plain')
+                data.delay.when.should.equal('2010-07-10T23:08:25Z')
+                data.id.should.equal('message:1')
+
+                data.mam.queryId.should.equal('queryid:1')
+                data.mam.to.should.eql({
+                    domain: 'shakespeare.lit',
+                    user: 'juliet',
+                    resource: 'hallroom'
+                })
+                data.mam.id.should.equal('result:1')
+                done()
+            })
+            mam.handle(helper.getStanza('message'))
+                .should.be.true
+        })
+
+    })
+
 }) 
