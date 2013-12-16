@@ -1,5 +1,5 @@
 var should = require('should')
-  , Mam = require('../../lib/mam')
+  , Mam = require('../../index')
   , ltx    = require('ltx')
   , helper = require('../helper')
 
@@ -24,4 +24,4 @@ describe('Mam', function() {
         mam.init(manager)
     })
 
-}) 
+})

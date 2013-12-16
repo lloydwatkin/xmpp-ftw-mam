@@ -1,8 +1,8 @@
 var should = require('should')
-  , Mam    = require('../../lib/mam')
+  , Mam    = require('../../index')
   , ltx    = require('ltx')
   , helper = require('../helper')
-  , rsm    = require('xmpp-ftw/lib/utils/xep-0059')
+  , rsm    = require('xmpp-ftw').utils['xep-0059']
 
 describe('Mam', function() {
 
@@ -26,7 +26,7 @@ describe('Mam', function() {
     })
 
     describe('Query', function() {
-        
+
         it('Errors if no callback provided', function(done) {
             xmpp.once('stanza', function() {
                 done('Unexpected outgoing stanza')
@@ -41,7 +41,7 @@ describe('Mam', function() {
             })
             socket.emit('xmpp.mam.query', {})
         })
-        
+
         it('Errors if non-functional callback provided', function(done) {
             xmpp.once('stanza', function() {
                 done('Unexpected outgoing stanza')
@@ -58,8 +58,8 @@ describe('Mam', function() {
         })
 
         it('Sends expected stanza', function(done) {
-            var request = {} 
-            
+            var request = {}
+
             xmpp.once('stanza', function(stanza) {
                 stanza.is('iq').should.be.true
                 stanza.attrs.id.should.exist
@@ -71,8 +71,8 @@ describe('Mam', function() {
         })
 
         it('Sends expected stanza with query id', function(done) {
-            var request = { queryId: 'query-id-1' } 
-            
+            var request = { queryId: 'query-id-1' }
+
             xmpp.once('stanza', function(stanza) {
                 stanza.is('iq').should.be.true
                 stanza.attrs.id.should.exist
@@ -85,8 +85,8 @@ describe('Mam', function() {
         })
 
         it('Sends expected stanza with JID filter', function(done) {
-            var request = { with: 'juliet@shakespeare.lit' } 
-            
+            var request = { with: 'juliet@shakespeare.lit' }
+
             xmpp.once('stanza', function(stanza) {
                 stanza.is('iq').should.be.true
                 stanza.attrs.id.should.exist
@@ -100,8 +100,8 @@ describe('Mam', function() {
         })
 
         it('Sends expected stanza with start', function(done) {
-            var request = { start: 'start-date-time' } 
-            
+            var request = { start: 'start-date-time' }
+
             xmpp.once('stanza', function(stanza) {
                 stanza.is('iq').should.be.true
                 stanza.attrs.id.should.exist
@@ -115,8 +115,8 @@ describe('Mam', function() {
         })
 
         it('Sends expected stanza with end', function(done) {
-            var request = { end: 'end-date-time' } 
-            
+            var request = { end: 'end-date-time' }
+
             xmpp.once('stanza', function(stanza) {
                 stanza.is('iq').should.be.true
                 stanza.attrs.id.should.exist
@@ -130,8 +130,8 @@ describe('Mam', function() {
         })
 
         it('Sends expected stanza with RSM', function(done) {
-            var request = { rsm: { max: '100' } } 
-            
+            var request = { rsm: { max: '100' } }
+
             xmpp.once('stanza', function(stanza) {
                 stanza.is('iq').should.be.true
                 stanza.attrs.id.should.exist
@@ -144,7 +144,7 @@ describe('Mam', function() {
             })
             socket.emit('xmpp.mam.query', request, function() {})
         })
-        
+
         it('Can handle an error response', function(done) {
 
             xmpp.once('stanza', function() {
@@ -158,8 +158,8 @@ describe('Mam', function() {
                 done()
             }
             socket.emit('xmpp.mam.query', {}, callback)
-        })        
-        
+        })
+
         it('Can handle an success response', function(done) {
 
             xmpp.once('stanza', function() {
@@ -173,8 +173,8 @@ describe('Mam', function() {
                 done()
             }
             socket.emit('xmpp.mam.query', {}, callback)
-        })  
-        
+        })
+
         it('Can handle an success response with RSM', function(done) {
 
             xmpp.once('stanza', function() {

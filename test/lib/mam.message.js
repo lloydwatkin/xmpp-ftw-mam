@@ -1,5 +1,5 @@
 var should = require('should')
-  , Mam    = require('../../lib/mam')
+  , Mam    = require('../../index')
   , ltx    = require('ltx')
   , helper = require('../helper')
 
@@ -25,7 +25,7 @@ describe('Mam', function() {
     })
 
     describe('Handles', function() {
-        
+
         it('Returns false for IQ stanzas', function() {
             mam.handles(ltx.parse('<iq/>')).should.be.false
         })
@@ -39,7 +39,7 @@ describe('Mam', function() {
                 '<message><result xmlns="' + mam.NS + '"/></message>'
             )).should.be.true
         })
-        
+
     })
 
     describe('Handle', function() {
@@ -71,4 +71,4 @@ describe('Mam', function() {
 
     })
 
-}) 
+})
