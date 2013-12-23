@@ -1,6 +1,6 @@
-var should = require('should')
-  , Mam = require('../../index')
-  , ltx    = require('ltx')
+'use strict';
+
+var Mam = require('../../index')
   , helper = require('../helper')
 
 describe('Mam', function() {

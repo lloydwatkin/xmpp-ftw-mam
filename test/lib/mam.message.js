@@ -1,8 +1,10 @@
-var should = require('should')
-  , Mam    = require('../../index')
+'use strict';
+
+var Mam    = require('../../index')
   , ltx    = require('ltx')
   , helper = require('../helper')
 
+/* jshint -W030 */
 describe('Mam', function() {
 
     var mam, socket, xmpp, manager

@@ -1,9 +1,11 @@
+'use strict';
+
 var should = require('should')
   , Mam    = require('../../index')
-  , ltx    = require('ltx')
   , helper = require('../helper')
   , rsm    = require('xmpp-ftw').utils['xep-0059']
 
+/* jshint -W030 */
 describe('Mam', function() {
 
     var mam, socket, xmpp, manager
