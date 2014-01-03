@@ -29,7 +29,8 @@
     "url": "https://github.com/xmpp-ftw/xmpp-ftw-mam/issues"
   },
   "dependencies": {
-    "ltx": "*"
+    "ltx": "~0.3.3",
+    "xmpp-ftw": "~1.0.1"
   },
   "devDependencies": {
     "mocha": "~1.8.1",
@@ -40,6 +41,6 @@
     "grunt-mocha-cli": "~1.4.0"
   },
   "peerDependencies": {
-    "xmpp-ftw": "0.x"
+    "xmpp-ftw": "1.x"
   }
 }

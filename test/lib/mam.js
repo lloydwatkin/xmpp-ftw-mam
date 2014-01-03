@@ -8,8 +8,8 @@ describe('Mam', function() {
     var mam, socket, xmpp, manager
 
     before(function() {
-        socket = new helper.Eventer()
-        xmpp = new helper.Eventer()
+        socket = new helper.SocketEventer()
+        xmpp = new helper.XmppEventer()
         manager = {
             socket: socket,
             client: xmpp,
@@ -21,6 +21,12 @@ describe('Mam', function() {
             }
         }
         mam = new Mam()
+        mam.init(manager)
+    })
+
+    beforeEach(function() {
+        socket.removeAllListeners()
+        xmpp.removeAllListeners()
         mam.init(manager)
     })
 

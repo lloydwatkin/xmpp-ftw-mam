@@ -11,8 +11,8 @@ describe('Mam', function() {
     var mam, socket, xmpp, manager
 
     before(function() {
-        socket = new helper.Eventer()
-        xmpp = new helper.Eventer()
+        socket = new helper.SocketEventer()
+        xmpp = new helper.XmppEventer()
         manager = {
             socket: socket,
             client: xmpp,
@@ -24,6 +24,12 @@ describe('Mam', function() {
             }
         }
         mam = new Mam()
+        mam.init(manager)
+    })
+
+    beforeEach(function() {
+        socket.removeAllListeners()
+        xmpp.removeAllListeners()
         mam.init(manager)
     })
 
@@ -41,7 +47,7 @@ describe('Mam', function() {
                 xmpp.removeAllListeners('stanza')
                 done()
             })
-            socket.emit('xmpp.mam.query', {})
+            socket.send('xmpp.mam.query', {})
         })
 
         it('Errors if non-functional callback provided', function(done) {
@@ -56,7 +62,7 @@ describe('Mam', function() {
                 xmpp.removeAllListeners('stanza')
                 done()
             })
-            socket.emit('xmpp.mam.query', {}, true)
+            socket.send('xmpp.mam.query', {}, true)
         })
 
         it('Sends expected stanza', function(done) {
@@ -69,7 +75,7 @@ describe('Mam', function() {
                 stanza.getChild('query', mam.NS).should.exist
                 done()
             })
-            socket.emit('xmpp.mam.query', request, function() {})
+            socket.send('xmpp.mam.query', request, function() {})
         })
 
         it('Sends expected stanza with query id', function(done) {
@@ -83,7 +89,7 @@ describe('Mam', function() {
                     .should.equal(request.queryId)
                 done()
             })
-            socket.emit('xmpp.mam.query', request, function() {})
+            socket.send('xmpp.mam.query', request, function() {})
         })
 
         it('Sends expected stanza with JID filter', function(done) {
@@ -98,7 +104,7 @@ describe('Mam', function() {
                     .should.equal(request.with)
                 done()
             })
-            socket.emit('xmpp.mam.query', request, function() {})
+            socket.send('xmpp.mam.query', request, function() {})
         })
 
         it('Sends expected stanza with start', function(done) {
@@ -113,7 +119,7 @@ describe('Mam', function() {
                     .should.equal(request.start)
                 done()
             })
-            socket.emit('xmpp.mam.query', request, function() {})
+            socket.send('xmpp.mam.query', request, function() {})
         })
 
         it('Sends expected stanza with end', function(done) {
@@ -128,7 +134,7 @@ describe('Mam', function() {
                     .should.equal(request.end)
                 done()
             })
-            socket.emit('xmpp.mam.query', request, function() {})
+            socket.send('xmpp.mam.query', request, function() {})
         })
 
         it('Sends expected stanza with RSM', function(done) {
@@ -144,7 +150,7 @@ describe('Mam', function() {
                     .should.equal(request.rsm.max)
                 done()
             })
-            socket.emit('xmpp.mam.query', request, function() {})
+            socket.send('xmpp.mam.query', request, function() {})
         })
 
         it('Can handle an error response', function(done) {
@@ -159,7 +165,7 @@ describe('Mam', function() {
                 xmpp.removeAllListeners('stanza')
                 done()
             }
-            socket.emit('xmpp.mam.query', {}, callback)
+            socket.send('xmpp.mam.query', {}, callback)
         })
 
         it('Can handle an success response', function(done) {
@@ -174,7 +180,7 @@ describe('Mam', function() {
                 data.end.should.equal('end-date-time')
                 done()
             }
-            socket.emit('xmpp.mam.query', {}, callback)
+            socket.send('xmpp.mam.query', {}, callback)
         })
 
         it('Can handle an success response with RSM', function(done) {
@@ -191,7 +197,7 @@ describe('Mam', function() {
                 rsm['first-index'].should.equal('0')
                 done()
             }
-            socket.emit('xmpp.mam.query', {}, callback)
+            socket.send('xmpp.mam.query', {}, callback)
         })
     })
 

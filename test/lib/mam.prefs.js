@@ -10,8 +10,8 @@ describe('Mam', function() {
     var mam, socket, xmpp, manager
 
     before(function() {
-        socket = new helper.Eventer()
-        xmpp = new helper.Eventer()
+        socket = new helper.SocketEventer()
+        xmpp = new helper.XmppEventer()
         manager = {
             socket: socket,
             client: xmpp,
@@ -23,6 +23,12 @@ describe('Mam', function() {
             }
         }
         mam = new Mam()
+        mam.init(manager)
+    })
+
+    beforeEach(function() {
+        socket.removeAllListeners()
+        xmpp.removeAllListeners()
         mam.init(manager)
     })
 
@@ -40,7 +46,7 @@ describe('Mam', function() {
                 xmpp.removeAllListeners('stanza')
                 done()
             })
-            socket.emit('xmpp.mam.preferences', {})
+            socket.send('xmpp.mam.preferences', {})
         })
 
         it('Errors if non-functional callback provided', function(done) {
@@ -55,7 +61,7 @@ describe('Mam', function() {
                 xmpp.removeAllListeners('stanza')
                 done()
             })
-            socket.emit('xmpp.mam.preferences', {}, true)
+            socket.send('xmpp.mam.preferences', {}, true)
         })
 
         it('Errors if \'default\' key missing', function(done) {
@@ -72,7 +78,7 @@ describe('Mam', function() {
                 xmpp.removeAllListeners('stanza')
                 done()
             }
-            socket.emit(
+            socket.send(
                 'xmpp.mam.preferences',
                 request,
                 callback
@@ -90,7 +96,7 @@ describe('Mam', function() {
                     .should.equal(request.default)
                 done()
             })
-            socket.emit('xmpp.mam.preferences', request, function() {})
+            socket.send('xmpp.mam.preferences', request, function() {})
         })
 
         it('Errors if \'always\' provided and not an array', function(done) {
@@ -107,7 +113,7 @@ describe('Mam', function() {
                 xmpp.removeAllListeners('stanza')
                 done()
             }
-            socket.emit(
+            socket.send(
                 'xmpp.mam.preferences',
                 request,
                 callback
@@ -131,7 +137,7 @@ describe('Mam', function() {
                 always[1].getText().should.equal(request.always[1])
                 done()
             })
-            socket.emit('xmpp.mam.preferences', request, function() {})
+            socket.send('xmpp.mam.preferences', request, function() {})
         })
 
         it('Errors if \'never\' provided and not an array', function(done) {
@@ -148,7 +154,7 @@ describe('Mam', function() {
                 xmpp.removeAllListeners('stanza')
                 done()
             }
-            socket.emit(
+            socket.send(
                 'xmpp.mam.preferences',
                 request,
                 callback
@@ -172,7 +178,7 @@ describe('Mam', function() {
                 never[1].getText().should.equal(request.never[1])
                 done()
             })
-            socket.emit('xmpp.mam.preferences', request, function() {})
+            socket.send('xmpp.mam.preferences', request, function() {})
         })
 
     })
