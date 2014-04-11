@@ -1,6 +1,6 @@
 {
   "name": "xmpp-ftw-mam",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "MAM (XEP-0313) plugin for XMPP-FTW",
   "main": "index.js",
   "directories": {
