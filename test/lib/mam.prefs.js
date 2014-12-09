@@ -182,6 +182,47 @@ describe('Mam', function() {
             })
             socket.send('xmpp.mam.preferences', request, function() {})
         })
+        
+        it('Handles an error response', function(done) {
+            var request = {
+                default: 'roster',
+                never: [
+                    'oberon@shakespeare.lit',
+                    'hamlet@shakespeare.lit'
+                ]
+            }
+            xmpp.once('stanza', function() {
+                manager.makeCallback(helper.getStanza('iq-error'))
+            })
+            var callback = function(error, data) {
+                should.not.exist(data)
+                error.type.should.equal('cancel')
+                error.condition.should.equal('error-condition')
+                xmpp.removeAllListeners('stanza')
+                done()
+            }
+            socket.send('xmpp.mam.preferences', request, callback)
+            
+        })
+        
+        it('Handles success response', function(done) {
+            var request = {
+                default: 'roster',
+                never: [
+                    'oberon@shakespeare.lit',
+                    'hamlet@shakespeare.lit'
+                ]
+            }
+            xmpp.once('stanza', function() {
+                manager.makeCallback(helper.getStanza('iq-result'))
+            })
+            var callback = function(error, data) {
+                should.not.exist(error)
+                data.should.be.true
+                done()
+            }
+            socket.send('xmpp.mam.preferences', request, callback)
+        })
 
     })
 
