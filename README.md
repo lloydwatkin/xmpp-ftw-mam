@@ -24,7 +24,3 @@ npm i --save xmpp-ftw-mam
 ```
 npm test
 ```
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/xmpp-ftw/xmpp-ftw-mam/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
