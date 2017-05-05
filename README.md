@@ -1,6 +1,8 @@
 xmpp-ftw-mam
 =================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/xmpp-ftw/xmpp-ftw-mam.svg)](https://greenkeeper.io/)
+
 A Message Archive Management/MAM (XEP-0313) plugin for XMPP-FTW.
 
 https://github.com/xmpp-ftw/xmpp-ftw.git
